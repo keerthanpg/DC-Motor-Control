@@ -1,4 +1,5 @@
 **DC Motor Control**
+![Screenshot](image1.png)
 Implemented debouncing for push button switch, speed control of DC motor using potentiometer as sensor and PID control of DC motor via GUI input. 
 
 **Part 1: Debouncing using Push Button Switch**
@@ -7,6 +8,7 @@ What is debouncing? Why is it important?
 
 Pushbutton[1]s  generate spurious open/close transitions when pressed which may be read as multiple presses in a very short time. Debouncing is the act of measuring input only once within a fixed short period of time. Without debouncing, pressing the button causes unpredictable results.
 
+![Screenshot](pushbutton.png)
 Fig 1: Standard push button switch[2]
 
 Here, the push button was connected to an interrupt pin which read HIGH/LOW once every 0.05 seconds, depending on when it&#39;s pressed. This was used to switch between different states, such as GUI/sensor control.
@@ -37,10 +39,12 @@ if(reading != previous1)
 
 The DC motor converts electrical energy into mechanical energy by force on a current carrying arm in a magnetic field.   We used the SPG30-60K motor[3] with mounted encoder shown in Figure 2. It has a rated voltage of 12V and rated speed of 12RPM.
 
+![Screenshot](dcmotor.png)
 Figure 2: DC motor with encoder[3]
 
 We used L298 motor driver, shown in figure 3, to control the DC motor.
 
+![Screenshot](motordriver.png)
 Figure 3: L298 Compact Motor Driver[4]
 
 The logic was controlled by two motor driver pins(L1,L2) and an Enable pin.
@@ -54,6 +58,7 @@ The logic was controlled by two motor driver pins(L1,L2) and an Enable pin.
 
 We used a rotary potentiometer to control motor.
 
+![Screenshot](potentiometer.png)
 Figure 4: Rotary Potentiometer[5]
 
 At its core, it is a three terminal resistor with a sliding or rotating contact that forms an adjustable voltage divider. When connected across a voltage(5V here) it read a value between 0 and 1023 when turned. This value was suppressed within 0-255 and written into the Enable pin as a PWM wave. Thereby, turning the motor alters voltage across motor and changes speed. _The transfer function of this sensor is linear._
@@ -61,13 +66,15 @@ At its core, it is a three terminal resistor with a sliding or rotating contact 
 **Part 3: DC Motor Position Control using PID**
 
 The PID control algorithm responds to proportional, integral and differential error.
-
+![Screenshot](eqn.png)
 The respective coefficients are non-negative.
 
+![Screenshot](pid.png)
 Figure 5: Schematic of PID Control Algorithm[6]
 
 A typical response curve looks like Figure 6
 
+![Screenshot](response.png)
 Figure 6: Response Curve of PID control
 
 Here, _settling time_ is determined by Kp, _steady state oscillations_ by Kd and _offset_ at steady state by Ki. By regulating three values one can obtain a desired response curve.
